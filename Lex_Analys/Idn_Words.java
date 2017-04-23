@@ -3,28 +3,28 @@ package Lex_Analys;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Idn_Words {
+class Idn_Words {
     private int value;
-    private Map idn;
+    private Map<String, Integer> idn;
 
-    public Idn_Words() {
+    Idn_Words() {
         value = 1000;
-        idn = new HashMap<String, Integer>();
+        idn = new HashMap<>();
     }
 
-    public boolean search(String key){
+    boolean search(String key){
         return idn.containsKey(key);
     }
 
-    public int get_index(String key){
-        return (int) idn.get(key);
+    int get_index(String key){
+        return idn.get(key);
     }
 
-    public int getValue() {
+    int getValue() {
         return value;
     }
 
-    public void update(String key){
+    void update(String key){
         idn.put(key, ++value);
     }
 }

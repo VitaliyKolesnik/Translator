@@ -3,11 +3,11 @@ package Lex_Analys;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Key_Words {
-    private Map key_word;
+class Key_Words {
+    private Map<String, Integer> key_word;
 
-    public Key_Words() {
-        key_word = new HashMap<String, Integer>();
+    Key_Words() {
+        key_word = new HashMap<>();
         key_word.put("PROGRAM", 401);
         key_word.put("PROCEDURE", 402);
         key_word.put("SIGNAL", 403);
@@ -21,11 +21,11 @@ public class Key_Words {
 
     }
 
-    public boolean search(String key){
+    boolean search(String key){
         return key_word.containsKey(key);
     }
 
-    public int get_index(String key) {
-        return (int) key_word.get(key);
+    int get_index(String key) {
+        return key_word.get(key);
     }
 }
