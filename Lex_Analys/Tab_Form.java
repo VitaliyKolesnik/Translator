@@ -1,9 +1,8 @@
 package Lex_Analys;
 
-
 import java.util.ArrayList;
 
-public class TabForm {
+public class Tab_Form {
 
     static int id = 0;
     static ArrayList<String[]> table;

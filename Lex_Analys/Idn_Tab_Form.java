@@ -1,6 +1,6 @@
 package Lex_Analys;
 
-public class IdnTabForm extends TabForm {
+public class Idn_Tab_Form extends Tab_Form {
 
     static {
         id_zona = 1000;

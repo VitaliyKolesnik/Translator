@@ -1,6 +1,6 @@
 package Lex_Analys;
 
-public class ConsTabForm extends TabForm {
+public class Key_Word_Tab_Form extends Tab_Form {
 
     static {
         id_zona = 401;
