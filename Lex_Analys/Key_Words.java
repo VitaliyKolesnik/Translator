@@ -1,11 +1,14 @@
 package Lex_Analys;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.StringJoiner;
 
 public class Key_Words {
 
-    private static Map<String, Integer> key_word;
+    private static Map key_word;
     static{
+        key_word = new HashMap<String, Integer>();
         key_word.put("PROGRAM", 401);
         key_word.put("PROCEDURE", 402);
         key_word.put("SIGNAL", 403);
@@ -23,6 +26,6 @@ public class Key_Words {
     }
 
     public static int get_index(String key) {
-        return key_word.get(key);
+        return (int) key_word.get(key);
     }
 }
