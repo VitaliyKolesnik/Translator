@@ -6,7 +6,7 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        new Analysyer(new File("program.txt"), new File("res.txt"));
+        new Analysyer(new File("program.txt"), new File("result.txt"));
     }
 
 }

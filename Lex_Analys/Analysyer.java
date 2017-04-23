@@ -17,7 +17,6 @@ public class Analysyer {
         this.out_file = out_file;
         key_words = new Key_Words();
         idn_words = new Idn_Words();
-        row = 1;
         parsing();
     }
 
@@ -28,7 +27,8 @@ public class Analysyer {
         String buffer;
         int lex_code;
         boolean suppress_output;
-
+        row = 1;
+        column = 1;
         if (in.available() == 0)
             System.out.println("Empty file");
             ch =in.read();
@@ -61,8 +61,11 @@ public class Analysyer {
                         idn_words.update(buffer);
                     }
                     output(buffer, lex_code);
-                    if (ch == 13)
+                    column++;
+                    if (ch == 13) {
                         ++row;
+                        column = 1;
+                    }
                 }
                 break;
 
@@ -79,17 +82,19 @@ public class Analysyer {
                                 do {
                                     while (in.available() > 0 && (ch != 42))
                                         ch = in.read();
-                                    if (in.available() == 0) {
-                                        System.out.print("*) expected but end of file found");
-                                        ch = 43;
-                                        break;
-                                    } else
-                                        ch = in.read();
+                                        if (in.available() == 0) {
+                                            System.out.print("*) expected but end of file found");
+                                            ch = 43;
+                                            break;
+                                        } else
+                                            ch = in.read();
                                 } while (ch != 41);
-                                if (ch == 42)
+                                if (ch == 41)
                                     suppress_output = true;
                             }
                         } else
+                            output("(", (int) '(');
+                            column++;
                             lex_code = 40;
                     }
                 }
@@ -99,18 +104,26 @@ public class Analysyer {
                     lex_code = ch;
                     output(String.valueOf((char) ch), ch);
                     if (in.available() > 0) ch = in.read();
-                    if (ch == 13)
+                    column++;
+                    if (ch == 13) {
                         ++row;
+                        column = 1;
+                    }
                 }
                 break;
                 default: {     //Error
-                    System.out.print("Illegal symbol ");
+                    //System.out.print("Illegal symbol ");
                     if (in.available() > 0) ch = in.read();
                 }
                     break;
             }
+
             if (!suppress_output)
                 System.out.print(lex_code + " ");
+            if (in.available() == 0) {
+                output(String.valueOf((char) ch), ch);
+                System.out.print(ch + " ");
+            }
         } while (in.available() > 0);
 
         in.close();
@@ -118,7 +131,7 @@ public class Analysyer {
     }
 
     private byte gets(int ch){
-        if (ch == 32) return 0; //whitespace
+        if (ch == 32 || ch == 13 || ch == 10) return 0; //whitespace
         else if (ch >= 65 && ch <= 90 || ch >= 97 && ch <= 122) return 1; //lit
         else if (ch == 40) return 2; //comment maybe
         else if (ch == 46 || ch == 58 || ch == 59 || ch == 41 || ch == 44) return 3; //dm
@@ -129,6 +142,7 @@ public class Analysyer {
     private void output(String lex, int lex_code) throws IOException {
         out.write(String.format("%12d", lex_code));
         out.write(String.format("%12d", row));
+        out.write(String.format("%12d", column));
         out.write(String.format("%12s", lex));
         out.write("\n");
 
