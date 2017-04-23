@@ -5,6 +5,8 @@ import java.io.*;
 public class Analysyer {
 
     private File file;
+    private Key_Words key_words;
+    private Idn_Words idn_words;
     private InputStream in;
     private int ch;
     private String buffer;
@@ -14,6 +16,8 @@ public class Analysyer {
 
     public Analysyer(File file) throws IOException {
         this.file = file;
+        key_words = new Key_Words();
+        idn_words = new Idn_Words();
         parsing();
     }
 
@@ -43,13 +47,13 @@ public class Analysyer {
                         buffer += (char) ch;
                         ch = in.read();
                     }
-                    if (Key_Words.search(buffer))
-                        lex_code = Key_Words.get_index(buffer);
-                    else if (Idn_Words.search(buffer))
-                        lex_code = Idn_Words.get_index(buffer);
+                    if (key_words.search(buffer))
+                        lex_code = key_words.get_index(buffer);
+                    else if (idn_words.search(buffer))
+                        lex_code = idn_words.get_index(buffer);
                     else {
-                        lex_code = Idn_Words.getValue() + 1;
-                        Idn_Words.update(buffer);
+                        lex_code = idn_words.getValue() + 1;
+                        idn_words.update(buffer);
                     }
                 }
                 break;
@@ -61,14 +65,14 @@ public class Analysyer {
                         ch = in.read();
                         if (ch == 42) {
                             if (in.available() == 0)
-                                System.out.println("(* expected but end of file found");
+                                System.out.print("(* expected but end of file found");
                             else {
                                 ch = in.read();
                                 do {
                                     while (in.available() > 0 && (ch != 42))
                                         ch = in.read();
                                     if (in.available() == 0) {
-                                        System.out.println("*) expected but end of file found");
+                                        System.out.print("*) expected but end of file found");
                                         ch = 43;
                                         break;
                                     } else
@@ -87,13 +91,13 @@ public class Analysyer {
 
                 case 3:     //delimiter
                     lex_code = ch;
-                    break;
+                break;
                 case 5:     //Error
-                    System.out.println("Illegal symbol");
+                    System.out.print("Illegal symbol ");
                     break;
             }
             if (!suppress_output)
-                System.out.println("Output: " + lex_code);
+                System.out.print(lex_code + " ");
         } while (in.available() > 0);
     }
 

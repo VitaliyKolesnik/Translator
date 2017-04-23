@@ -4,25 +4,27 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Idn_Words {
-    private static int value = 1000;
-    private static Map idn;
-    static {
+    private int value;
+    private Map idn;
+
+    public Idn_Words() {
+        value = 1000;
         idn = new HashMap<String, Integer>();
     }
 
-    public static boolean search(String key){
+    public boolean search(String key){
         return idn.containsKey(key);
     }
 
-    public static int get_index(String key){
+    public int get_index(String key){
         return (int) idn.get(key);
     }
 
-    public static int getValue() {
+    public int getValue() {
         return value;
     }
 
-    public static void update(String key){
+    public void update(String key){
         idn.put(key, ++value);
     }
 }

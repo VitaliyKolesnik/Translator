@@ -5,9 +5,9 @@ import java.util.Map;
 import java.util.StringJoiner;
 
 public class Key_Words {
+    private Map key_word;
 
-    private static Map key_word;
-    static{
+    public Key_Words() {
         key_word = new HashMap<String, Integer>();
         key_word.put("PROGRAM", 401);
         key_word.put("PROCEDURE", 402);
@@ -19,13 +19,14 @@ public class Key_Words {
         key_word.put("EXT", 408);
         key_word.put("BEGIN", 409);
         key_word.put("END", 410);
+
     }
 
-    public static boolean search(String key){
+    public boolean search(String key){
         return key_word.containsKey(key);
     }
 
-    public static int get_index(String key) {
+    public int get_index(String key) {
         return (int) key_word.get(key);
     }
 }
