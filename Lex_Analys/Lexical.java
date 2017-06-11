@@ -223,7 +223,7 @@ public class Lexical {
     }
 
     public static byte gets(int ch){
-        if (ch == 32 || ch == 13 || ch == 10) return 0; //whitespace or new line or new page
+        if (ch == 32 || ch == 13 || ch == 10 || ch == 9 || ch == 8) return 0; //whitespace or new line or new page
         else if (ch >= 65 && ch <= 90 || ch >= 97 && ch <= 122) return 1; //lit
         else if (ch == 40) return 2; //comment maybe
         else if (ch == 46 || ch == 58 || ch == 59 || ch == 41 || ch == 44 || ch == 63) return 3; //dm

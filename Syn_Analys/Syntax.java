@@ -299,7 +299,7 @@ public class Syntax {
                     variable_idents.add(key);
                 tree.write(tab + "<string>\n");
                 tab += "    ";
-                tree.write(tab + "'" + key + "'" + "\n");
+                tree.write(tab + key + "\n");
                 Empty();
                 tab = tab.substring(4);
                 flag = true;
