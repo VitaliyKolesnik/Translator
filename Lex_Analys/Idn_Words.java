@@ -3,7 +3,7 @@ package Lex_Analys;
 import java.util.HashMap;
 import java.util.Map;
 
-class Idn_Words {
+public class Idn_Words {
     private int value;
     private Map<String, Integer> idn;
 
@@ -12,19 +12,23 @@ class Idn_Words {
         idn = new HashMap<>();
     }
 
-    boolean search(String key){
+    public boolean search(String key){
         return idn.containsKey(key);
     }
 
-    int get_index(String key){
+    public int get_index(String key){
         return idn.get(key);
     }
 
-    int getValue() {
+    public int getValue() {
         return value;
     }
 
     void update(String key){
         idn.put(key, ++value);
+    }
+
+    public Map<String, Integer> getIdn() {
+        return idn;
     }
 }

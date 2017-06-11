@@ -1,12 +1,16 @@
-import Lex_Analys.Analysyer;
+import Code_Generator.Code_Generation;
+import Lex_Analys.Lexical;
+import Syn_Analys.Syntax;
 
 import java.io.File;
 import java.io.IOException;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
-        new Analysyer(new File("program.txt"), new File("result.txt"));
+    public static void main(String[] args) throws IOException, Syntax.Syntax_Exeption {
+        Lexical lexical = new Lexical("program.txt","result.txt");
+        Syntax syntax = new Syntax(lexical.getRow_with_lexem(), lexical.getKey_words().getKey_word(), lexical.getIdn_words().getIdn());
+        Code_Generation code = new Code_Generation("tree.txt", "result_code.txt");
     }
 
 }

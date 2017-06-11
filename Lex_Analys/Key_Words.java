@@ -1,9 +1,8 @@
 package Lex_Analys;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
-class Key_Words {
+public class Key_Words {
     private Map<String, Integer> key_word;
 
     Key_Words() {
@@ -18,6 +17,8 @@ class Key_Words {
         key_word.put("EXT", 408);
         key_word.put("BEGIN", 409);
         key_word.put("END", 410);
+        key_word.put("IF", 411);
+        key_word.put("THEN", 412);
 
     }
 
@@ -25,7 +26,12 @@ class Key_Words {
         return key_word.containsKey(key);
     }
 
+    public Map<String, Integer> getKey_word() {
+        return key_word;
+    }
+
     int get_index(String key) {
         return key_word.get(key);
+
     }
 }
