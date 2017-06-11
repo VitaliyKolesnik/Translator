@@ -22,7 +22,7 @@ public class Key_Words {
 
     }
 
-    boolean search(String key){
+    public boolean search(String key){
         return key_word.containsKey(key);
     }
 

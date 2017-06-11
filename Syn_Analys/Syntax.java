@@ -1,5 +1,7 @@
 package Syn_Analys;
 
+import Lex_Analys.Lexical;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -17,17 +19,26 @@ public class Syntax {
     private int ts;                                 //лексема со строки лексем
     private Map<String, Integer> key_words;         //таблица ключевых лексем
     private Map<String, Integer> idn_words;         //таблица с идентификаторами
+
+    public ArrayList<String> getProc_idents() {
+        return proc_idents;
+    }
+
     private ArrayList<String> proc_idents;          //массив с процедурными идентификаторами
     private ArrayList<String> variable_idents;      //массив с параметрами процедуры
     private HashMap<String, String> type_idents;    //пары идентификаторов и их типов
 
+    public HashMap<String, String> getType_idents() {
+        return type_idents;
+    }
 
-    public Syntax(ArrayList<Integer> row_with_lexem, Map<String, Integer> key_words, Map<String, Integer> idn_words) throws Syntax_Exeption, IOException {
+
+    public Syntax(Lexical lexical) throws Syntax_Exeption, IOException {
         tree = new FileWriter(new File("tree.txt"));
         tab = "    ";
-        this.row_with_lexem = row_with_lexem;
-        this.key_words = key_words;
-        this.idn_words = idn_words;
+        this.row_with_lexem = lexical.getRow_with_lexem();
+        this.key_words = lexical.getKey_words().getKey_word();
+        this.idn_words = lexical.getIdn_words().getIdn();
         proc_idents = new ArrayList<>();
         variable_idents = new ArrayList<>();
         type_idents = new HashMap<>();
@@ -261,6 +272,7 @@ public class Syntax {
         if (ts != 403)
             Err();
         ts = get_lex();
+        tree.write(tab + "SIGNAL\n");
         for ( String key: key_words.keySet()) {
             if (key_words.get(key) == ts) {
                 tree.write(tab + key + "\n");

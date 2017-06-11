@@ -9,8 +9,8 @@ public class Main {
 
     public static void main(String[] args) throws IOException, Syntax.Syntax_Exeption {
         Lexical lexical = new Lexical("program.txt","result.txt");
-        Syntax syntax = new Syntax(lexical.getRow_with_lexem(), lexical.getKey_words().getKey_word(), lexical.getIdn_words().getIdn());
-        Code_Generation code = new Code_Generation("tree.txt", "result_code.txt");
+        Syntax syntax = new Syntax(lexical);
+        Code_Generation code = new Code_Generation(syntax, lexical);
     }
 
 }
