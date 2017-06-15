@@ -2,6 +2,8 @@ package Lex_Analys;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Lexical {
 
@@ -12,6 +14,12 @@ public class Lexical {
     private FileWriter out;
     private FileInputStream in;
     private ArrayList<Integer> row_with_lexem;
+
+    public HashMap<String, ArrayList<Integer>> getTable() {
+        return table;
+    }
+
+    private HashMap<String, ArrayList<Integer>> table;
 
 
 
@@ -25,6 +33,7 @@ public class Lexical {
         key_words = new Key_Words();
         idn_words = new Idn_Words();
         row_with_lexem = new ArrayList<>();
+        table = new HashMap<>();
         parsing();
     }
 
@@ -47,6 +56,8 @@ public class Lexical {
                 case 0: {   //whitespace
                     while (in.available() > 0) {
                         ch = in.read();
+                        if (ch == 13)
+                            row++;
                         if (gets(ch) != 0)
                             break;
                     }
@@ -56,6 +67,8 @@ public class Lexical {
 
                 case 1: {   //identifier
                     while (in.available() > 0 && (gets(ch) == 4 || gets(ch) == 1) && ch != 13) {
+                        if (ch == 13)
+                            row++;
                         buffer += (char) ch;
                         ch = in.read();
                     }
@@ -83,14 +96,19 @@ public class Lexical {
                         lex_code = 40;
                     else {
                         ch = in.read();
+                        if (ch == 13)
+                            row++;
                         if (ch == 42) {
                             if (in.available() == 0)
                                 System.out.print("(* expected but end of file found");
                             else {
                                 ch = in.read();
                                 do {
-                                    while (in.available() > 0 && (ch != 42))
+                                    while (in.available() > 0 && (ch != 42)) {
+                                        if (ch == 13)
+                                            row++;
                                         ch = in.read();
+                                    }
                                         if (in.available() == 0) {
                                             System.out.print("*) expected but end of file found");
                                             ch = 43;
@@ -237,6 +255,16 @@ public class Lexical {
         out.write(String.format("%12d", row));
         out.write(String.format("%12d", column));
         out.write(String.format("%19s", lex + "\n"));
+        ArrayList<Integer> lol = new ArrayList<>();
+        if (table.containsKey(lex)) {
+            lol = table.get(lex);
+            lol.add(row);
+            table.put(lex, lol);
+        }
+        else {
+            lol.add(row);
+            table.put(lex, lol);
+        }
 
     }
 

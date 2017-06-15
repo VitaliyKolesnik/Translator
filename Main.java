@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException, Syntax.Syntax_Exeption {
+    public static void main(String[] args) throws IOException, Syntax.Syntax_Exeption, Code_Generation.Syntax_Exeption {
         Lexical lexical = new Lexical("program.txt","result.txt");
         Syntax syntax = new Syntax(lexical);
         Code_Generation code = new Code_Generation(syntax, lexical);
